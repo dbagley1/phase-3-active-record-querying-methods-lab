@@ -1,4 +1,4 @@
-ENV['RACK_ENV'] = 'test'
+ENV["RACK_ENV"] = "test"
 require_relative "../config/environment"
 require "sinatra/activerecord/rake"
 
@@ -9,25 +9,15 @@ RSpec.configure do |config|
     Rake::Task["db:migrate"].execute
   end
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
 
-  config.before do
-    DatabaseCleaner.strategy = :transaction
-  end
+  config.before { DatabaseCleaner.strategy = :transaction }
 
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-  end
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
 
-  config.before do
-    DatabaseCleaner.start
-  end
+  config.before { DatabaseCleaner.start }
 
-  config.after do
-    DatabaseCleaner.clean
-  end
+  config.after { DatabaseCleaner.clean }
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -36,6 +26,6 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
-  
+
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
